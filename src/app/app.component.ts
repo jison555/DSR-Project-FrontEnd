@@ -1,9 +1,9 @@
-import { Component, ViewChild,ElementRef } from '@angular/core';
+import { Component, ViewChild,ElementRef, Output ,EventEmitter } from '@angular/core';
 import { FormArray, NgForm } from '@angular/forms';
 import jsPDF from 'jspdf';
 import { OnInit } from '@angular/core'
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
-import { ContactRequest, HEB } from 'src/models/contact-model';
+import autoTable from 'jspdf-autotable'
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,10 @@ import { ContactRequest, HEB } from 'src/models/contact-model';
 })
 export class AppComponent implements OnInit{
   angForm!: FormGroup;
+  isshowTable:boolean=false;
+  data: any;
   
+  // @ViewChild('content', {static:false}) el!:ElementRef;
 
   ngOnInit(): void {
     {
@@ -61,25 +64,40 @@ deleteNameField(index:number) {
   }
 }
 
+tableView() {
+  this.isshowTable=true;
+}
+
 onFormSubmit(): void {
   console.log(this.angForm.value);
+  this.isshowTable=true;
+  this.data = this.angForm.value;
+  //this.angForm.reset();
+
+    // Make sure to create a deep copy of the form-model
+    //   
+    let pdf = new jsPDF();
+    // console.log(this.el.nativeElement);
+
+    // autoTable(pdf, {
+    //   head: [['Name', 'Email', 'Country']],
+    //   body: [
+    //     ['David', 'david@example.com', 'Sweden'],
+    //     ['Castille', 'castille@example.com', 'Spain'],
+    //     // ...
+    //   ],
+    // })
+    // pdf.save('demo.pdf');
+    
+    // pdf.html(this.el.nativeElement,{
+    //   callback: (pdf) =>{
+    //     pdf.save('test.pdf');
+    //   }
+    // })
   
-  // for (let i = 0; i < this.rows.length; i++) {
-  //   console.log(this.rows.value);
-  // }
 }
 
 
 
-// onSubmit() {
-//   // Make sure to create a deep copy of the form-model
-//       let pdf = new jsPDF('p','pt','a4');
-//     console.log(this.el.nativeElement);
-    
-//     pdf.html(this.el.nativeElement,{
-//       callback: (doc) =>{
-//         doc.save('test.pdf');
-//       }
-//     })
 
 }
